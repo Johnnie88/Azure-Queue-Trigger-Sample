@@ -19,8 +19,13 @@ namespace Pluralsightfuncs
         {
             log.LogInformation("Received a payment.");
             
-            var requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
+            var requestBody = await new StreamReader(req.Body)
+                .ReadToEndAsync();
+
+            var order = JsonConvert.DeserializeObject<Order>(requestBody);
+
+            log.LogInformation($"Order {order.OrderId} received from" +
+            $" {order.Email} for product {order.ProductId}");
            
             return new OkObjectResult($"Thank you for you purchase");
         }
