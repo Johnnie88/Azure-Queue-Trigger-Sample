@@ -25,4 +25,12 @@ namespace Pluralsightfuncs
             return new OkObjectResult($"Thank you for you purchase");
         }
     }
+
+    public class Order 
+    {
+        public string OrderId { get; set; }
+        public string ProductId { get; set; }
+        public string Email { get; set; }
+        public decimal Price { get; set; }
+    }
 }
