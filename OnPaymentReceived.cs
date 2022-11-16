@@ -15,6 +15,8 @@ namespace Pluralsightfuncs
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)]
             HttpRequest req,
+            // TODO: put the connection value by default
+            [Queue("orders"), StorageAccount("AzureWebJobsStorage")] IAsyncCollector<Order> orderQueue,
             ILogger log)
         {
             log.LogInformation("Received a payment.");
@@ -23,6 +25,8 @@ namespace Pluralsightfuncs
                 .ReadToEndAsync();
 
             var order = JsonConvert.DeserializeObject<Order>(requestBody);
+
+            await orderQueue.AddAsync(order);
 
             log.LogInformation($"Order {order.OrderId} received from" +
             $" {order.Email} for product {order.ProductId}");
