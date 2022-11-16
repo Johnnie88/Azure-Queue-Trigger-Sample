@@ -16,7 +16,7 @@ namespace Pluralsightfuncs
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)]
             HttpRequest req,
             // TODO: put the connection value by default
-            [Queue("orders"), StorageAccount("AzureWebJobsStorage")] IAsyncCollector<Order> orderQueue,
+            [Queue("orders"), StorageAccount("pluralsightqueue")] IAsyncCollector<Order> orderQueue,
             ILogger log)
         {
             log.LogInformation("Received a payment.");
